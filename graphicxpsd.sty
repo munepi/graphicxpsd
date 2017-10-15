@@ -1,5 +1,5 @@
 \ProvidesPackage{graphicxpsd}
-  [2017/10/15 v0.2  Supporting Adobe Photoshop format (PSD) for graphicx via sips command]
+  [2017/10/15 v0.3  Supporting Adobe Photoshop format (PSD) for graphicx via sips command]
 
 %% support the extension .psd
 \@namedef{Gin@rule@.PSD}#1{{psd}{.xbb}{#1}}
@@ -8,7 +8,7 @@
 %% include .psd file
 \let\Ginclude@psd\Ginclude@bmp
 
-\@ifundefined{GPT@space}{%%TL2016
+\@ifundefined{GPT@space}{%%TL2015, TL2016
   \def\GPT@space{ }%
 %% read .psd file
 \def\Gread@psd#1{%
