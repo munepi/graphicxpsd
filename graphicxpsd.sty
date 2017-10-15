@@ -1,0 +1,28 @@
+\ProvidesPackage{graphicxpsd}
+  [2017/10/15 v0.1  Supporting Adobe Photoshop format (PSD) for graphicx via sips command]
+
+%% support the extension .psd
+\@namedef{Gin@rule@.psd}#1{{psd}{.xbb}{#1}}
+
+%% include .psd file
+\def\Ginclude@psd#1{%
+  \let\Gin@page\@empty
+  \let\Gin@pagebox\@empty
+  \Ginclude@dvipdfmx{#1}{image}%
+}
+
+%% read .psd file
+\def\Gread@psd#1{%
+  \typeout{converting: \Gin@base\Gin@ext\space -> \Gin@base.png}%
+  \immediate\write18{sips -s format png \Gin@base\Gin@ext\GPT@space --out \Gin@base4dpx.png}%
+  %% renamed inside: foo.psd -> foo4dpx.png
+  \let\clone@Gin@base\Gin@base
+  \let\clone@Gin@ext\Gin@ext
+  \def\Gin@base{\clone@Gin@base4dpx}%
+  \def\Gin@ext{.png}%
+% \typeout{!!! #1}%%=> tigerpsdfmt4dpx.xbb
+% \typeout{!!! \Gin@base\Gin@ext}%%=> tigerpsdfmt4dpx.png
+  \Gread@generic{#1}%
+  \Gread@extractbb@aux}
+
+\endinput
