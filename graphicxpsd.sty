@@ -21,7 +21,7 @@
 %% read .psd file
 \let\clone@Gread@bmp\Gread@bmp
 \def\Gread@psdtopng#1{%
-  \typeout{converting: \Gin@base\Gin@ext\space -> \Gin@base.png}%
+  \typeout{converting: \Gin@base\Gin@ext\GPT@space -> \Gin@base4dpx.png}%
   \immediate\write18{sips -s format png \Gin@base\Gin@ext\GPT@space --out \Gin@base4dpx.png}%
   %% renamed inside: foo.psd -> foo4dpx.png
   \let\clone@Gin@base\Gin@base
