@@ -1,11 +1,16 @@
 \ProvidesPackage{graphicxpsd}
-  [2017/10/16 v0.4  Supporting Adobe Photoshop format (PSD) for graphicx with sips command]
+  [2017/10/16 v0.5  Supporting Adobe Photoshop format (PSD) for graphicx with sips command]
 
 %% support the extension .psd
 \@namedef{Gin@rule@.PSD}#1{{psd}{.xbb}{#1}}
 \@namedef{Gin@rule@.psd}#1{{psd}{.xbb}{#1}}
 
-%% include .psd file
+%% load graphicx.sty with dvipdfmx
+\@ifundefined{Ginclude@bmp}{%
+\RequirePackage[dvipdfmx]{graphicx}
+}{}
+
+%% then, include .psd file as raster image
 \let\Ginclude@psd\Ginclude@bmp
 
 %% compatibility for TL2016 or lower version
@@ -14,7 +19,7 @@
 }{}
 
 %% read .psd file
-\let\clone@Gread@pdf\Gread@pdf
+\let\clone@Gread@bmp\Gread@bmp
 \def\Gread@psd#1{%
   \typeout{converting: \Gin@base\Gin@ext\space -> \Gin@base.png}%
   \immediate\write18{sips -s format png \Gin@base\Gin@ext\GPT@space --out \Gin@base4dpx.png}%
@@ -24,6 +29,6 @@
   \def\Gin@ext{.png}%
 % \typeout{!!! #1}%%=> tigerpsdfmt4dpx.xbb
 % \typeout{!!! \Gin@base\Gin@ext}%%=> tigerpsdfmt4dpx.png
-  \clone@Gread@pdf{#1}}
+  \clone@Gread@bmp{#1}}
 
 \endinput
