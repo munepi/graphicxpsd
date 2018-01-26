@@ -1,7 +1,5 @@
 
-graphicxpsd.tds.zip:
-	rm -rf graphicxpsd.tds.zip Work
-
+graphicxpsd.tds.zip: clean
 	mkdir -p Work/tex/latex/graphicxpsd
 	mkdir -p Work/doc/latex/graphicxpsd
 	cp -a graphicxpsd.sty Work/tex/latex/graphicxpsd/
@@ -16,6 +14,7 @@ graphicxpsd.tds.zip:
 clean:
 	rm -f *.aux *.log
 	find . -type f -name "*~" -delete
+	rm -rf graphicxpsd.tds.zip Work
 
 .PHONY: graphicxpsd.tds.zip
 
