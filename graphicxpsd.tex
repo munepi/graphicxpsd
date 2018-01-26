@@ -56,12 +56,11 @@ Typeset the following {\LaTeX} document with LuaTeX.
 
 \begin{quote}
 \begin{verbatim}
+%#!lualatex -shell-escape
 \documentclass[luatex]{article}%%set luatex driver as global option
 \usepackage{graphicx}
 \usepackage{graphicxpsd}
 \begin{document}
-%% $ file tigerpsdfmt.psd
-%% tigerpsdfmt.psd: Adobe Photoshop Image, 550 x 568, RGBA, 4x 8-bit channels
 \includegraphics{tigerpsdfmt.psd}
 \end{document}
 \end{verbatim}
