@@ -4,10 +4,47 @@
 %#!rm -f tigerpsdfmt4* && lualatex -shell-escape test-gin-rule-psd
 \documentclass[luatex]{article}%%set as a global option
 \usepackage{graphicx}
-\usepackage{graphicxpsd}
+\usepackage[%
+  imagemagick,%default: sips
+]{graphicxpsd}
 \listfiles
 \begin{document}
 %% $ file tigerpsdfmt.psd
 %% tigerpsdfmt.psd: Adobe Photoshop Image, 550 x 568, RGBA, 4x 8-bit channels
 \includegraphics{tigerpsdfmt.psd}
 \end{document}
+
+$ pdfinfo tigerpsdfmt4gfxpsd.pdf 
+Title:          tigerpsdfmt4gfxpsd
+Producer:       /opt/homebrew/Cellar/imagemagick/7.0.7-15/share/doc/ImageMagick-7//index.html
+CreationDate:   Sat Jan 27 00:10:51 2018 JST
+ModDate:        Sat Jan 27 00:10:51 2018 JST
+Tagged:         no
+UserProperties: no
+Suspects:       no
+Form:           none
+JavaScript:     no
+Pages:          2
+Encrypted:      no
+Page size:      99 x 102.24 pts
+Page rot:       0
+File size:      1052740 bytes
+Optimized:      no
+PDF version:    1.4
+
+$ pdfinfo tigerpsdfmt4gfxpsd.pdf 
+Producer:       Mac OS X 10.13.4 Quartz PDFContext
+CreationDate:   Fri Jan 26 15:12:13 2018 JST
+ModDate:        Fri Jan 26 15:12:13 2018 JST
+Tagged:         no
+UserProperties: no
+Suspects:       no
+Form:           none
+JavaScript:     no
+Pages:          1
+Encrypted:      no
+Page size:      99 x 102.24 pts
+Page rot:       0
+File size:      112882 bytes
+Optimized:      no
+PDF version:    1.3
