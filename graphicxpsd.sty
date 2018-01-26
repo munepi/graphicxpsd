@@ -32,7 +32,7 @@
 \DeclareOption{luatex}{\@gfxpsd@dvipdfmxfalse\@gfxpsd@pdftextrue}
 \DeclareOption{pdftex}{\@gfxpsd@dvipdfmxfalse\@gfxpsd@pdftextrue}
 
-%% support two psd-to-pdf command: sips (Darwin/macOS), convert (ImageMagick)
+%% support two psd-to-pdf commands: sips (Darwin/macOS), convert (ImageMagick)
 \def\@gfxpsd@psdtopdf{sips}%% as default
 \DeclareOption{imagemagick}{\gdef\@gfxpsd@psdtopdf{convert}}
 \DeclareOption{sips}{\gdef\@gfxpsd@psdtopdf{sips}}
