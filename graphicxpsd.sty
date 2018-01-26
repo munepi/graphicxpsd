@@ -1,17 +1,38 @@
+% #!ptex2pdf -l -u -od '-v' test-gin-rule-psd
+%#!pdflatex test-gin-rule-psd
 \ProvidesPackage{graphicxpsd}
-  [2017/10/16 v0.6  Supporting Adobe Photoshop format (PSD) for graphicx with sips command]
+  [2017/10/16 v0.6  Supporting Adobe Photoshop format (PSD) for graphicx with sips (Darwin/macOS)/convert (ImageMagick) command]
+
+\def\gfxpsd@error{\PackageError{graphicxpsd}}
+\def\gfxpsd@warning{\PackageWarning{graphicxpsd}}
+\def\gfxpsd@warningnoline{\PackageWarningNoLine{graphicxpsd}}
+\def\gfxpsd@info{\PackageInfo{graphicxpsd}}
+
+\newif\if@gfxpsd@dvipdfmx \@gfxpsd@dvipdfmxfalse
+\newif\if@gfxpsd@pdftex \@gfxpsd@pdftextrue
+
+%% support dviware drivers
+\DeclareOption{dvipdfmx}{\@gfxpsd@dvipdfmxtrue\@gfxpsd@pdftexfalse}
+\DeclareOption{xetex}{\@gfxpsd@dvipdfmxtrue\@gfxpsd@pdftexfalse}
+\DeclareOption{luatex}{\@gfxpsd@dvipdfmxfalse\@gfxpsd@pdftextrue}
+\DeclareOption{pdftex}{\@gfxpsd@dvipdfmxfalse\@gfxpsd@pdftextrue}
+\ProcessOptions\relax
 
 %% support the extension .psd
-\@namedef{Gin@rule@.PSD}#1{{psdtopng}{.xbb}{#1}}
-\@namedef{Gin@rule@.psd}#1{{psdtopng}{.xbb}{#1}}
+\if@gfxpsd@dvipdfmx
+  \@namedef{Gin@rule@.PSD}#1{{psdtopdf}{.xbb}{#1}}
+  \@namedef{Gin@rule@.psd}#1{{psdtopdf}{.xbb}{#1}}
+\else\if@gfxpsd@pdftex
+  \@namedef{Gin@rule@.PSD}#1{{psdtopdf}{.pdf}{#1}}
+  \@namedef{Gin@rule@.psd}#1{{psdtopdf}{.pdf}{#1}}
+\else
+  \grnchry@error{Please choice specific dviware driver from the following list
+    and set the one as a documentclass option.^^J
+    available dviware drivers: dvipdfmx, xetex, luatex, pdftex}%
+\fi\fi
 
-%% load graphicx.sty with dvipdfmx
-\@ifundefined{Ginclude@bmp}{%
-\RequirePackage[dvipdfmx]{graphicx}
-}{}
-
-%% then, include .psd file as raster image
-\let\Ginclude@psdtopng\Ginclude@bmp
+%% then, include .psd file as converted PDF
+\let\Ginclude@psdtopdf\Ginclude@pdf
 
 %% compatibility for TL2016 or lower version
 \@ifundefined{GPT@space}{%
@@ -19,16 +40,16 @@
 }{}
 
 %% read .psd file
-\let\clone@Gread@bmp\Gread@bmp
-\def\Gread@psdtopng#1{%
-  \typeout{converting: \Gin@base\Gin@ext\GPT@space -> \Gin@base4dpx.png}%
-  \immediate\write18{sips -s format png \Gin@base\Gin@ext\GPT@space --out \Gin@base4dpx.png}%
-  %% renamed inside: foo.psd -> foo4dpx.png
+\let\clone@Gread@pdf\Gread@pdf
+\def\Gread@psdtopdf#1{%
+  \typeout{converting: \Gin@base\Gin@ext\GPT@space -> \Gin@base4dpx.pdf}%
+  \immediate\write18{sips -s format pdf \Gin@base\Gin@ext\GPT@space --out \Gin@base4dpx.pdf}%
+  %% renamed inside: foo.psd -> foo4dpx.pdf
   \let\clone@Gin@base\Gin@base
   \def\Gin@base{\clone@Gin@base4dpx}%
-  \def\Gin@ext{.png}%
+  \def\Gin@ext{.pdf}%
 % \typeout{!!! #1}%%=> tigerpsdfmt4dpx.xbb
-% \typeout{!!! \Gin@base\Gin@ext}%%=> tigerpsdfmt4dpx.png
-  \clone@Gread@bmp{#1}}
+% \typeout{!!! \Gin@base\Gin@ext}%%=> tigerpsdfmt4dpx.pdf
+  \clone@Gread@pdf{#1}}
 
 \endinput
