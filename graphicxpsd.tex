@@ -1,0 +1,74 @@
+%#!rm -f tigerpsdfmt4* && lualatex -shell-escape graphicxpsd
+\documentclass[luatex]{article}
+\usepackage{shortvrb}\MakeShortVerb{\|}
+\usepackage{graphicx}
+\usepackage{graphicxpsd}
+\title{\textsf{graphicxpsd} Package}
+\author{Munehiro Yamamoto}
+\date{2018/01/26 v1.0}
+\begin{document}
+\maketitle
+\begin{abstract}
+This package provides Adobe Photoshop Data format (PSD) support 
+for \textsf{graphicx} package
+with \texttt{sips} (Darwin/macOS)/\texttt{convert} (ImageMagick) command.
+\end{abstract}
+
+\section{Motivation}
+\texttt{graphicx} package supports already many graphics image formats as bellow. 
+\begin{itemize}
+\item non-vector formats: jpg, png, bmp, and so on
+\item PostScript-style formats: eps, ps
+\item PDF-style formats: pdf, ai
+\end{itemize}
+However, it currently does not support Adobe Photoshop Data format (PSD). 
+
+Against that, we developed the \textsf{graphicxpsd} package 
+to support PSD format via PSD-to-PDF conversion 
+with the following image converters.
+\begin{itemize}
+\item \texttt{sips}: pre-installed command in Darwin/macOS
+\item \texttt{convert}: bundled command in ImageMagick
+\end{itemize}
+
+\section{Loading \textsf{graphicxpsd} Package}
+
+Load \textsf{graphicxpsd} package after loading \textsf{graphicx} package.
+
+\begin{quote}
+\begin{verbatim}
+\usepackage{graphicx}
+\usepackage[<options>]{graphicxpsd}
+\end{verbatim}
+\end{quote}
+
+The list of available options is the following.
+\begin{itemize}
+\item |dvipdfmx|, |xetex|, |pdftex|, |luatex|: supported driver options; 
+You can also give specific driver option from global option.
+
+\item |sips| (default), |imagemagick|: supported converter
+\end{itemize}
+
+\section{Example}
+
+Typeset the following {\LaTeX} document with LuaTeX.
+
+\begin{quote}
+\begin{verbatim}
+\documentclass[luatex]{article}%%set luatex driver as global option
+\usepackage{graphicx}
+\usepackage{graphicxpsd}
+\begin{document}
+%% $ file tigerpsdfmt.psd
+%% tigerpsdfmt.psd: Adobe Photoshop Image, 550 x 568, RGBA, 4x 8-bit channels
+\includegraphics{tigerpsdfmt.psd}
+\end{document}
+\end{verbatim}
+\end{quote}
+
+Then, the result is as below.
+
+\includegraphics{tigerpsdfmt.psd}
+
+\end{document}
