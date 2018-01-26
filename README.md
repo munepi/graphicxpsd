@@ -15,7 +15,7 @@ with sips (Darwin/macOS)/convert (ImageMagick) command.
 
 ## Installation
 
-Copy: `graphicxpsd.sty` -> `$TEXMF/tex/platex/graphicxpsd/`
+Copy: `graphicxpsd.sty` -> `$TEXMF/tex/latex/graphicxpsd/`
 
 ## License
 
