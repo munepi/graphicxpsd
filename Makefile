@@ -12,7 +12,7 @@ graphicxpsd.tds.zip: clean
 	@echo finished
 
 clean:
-	rm -f *.aux *.log
+	rm -f *.aux *.log *4gfxpsd.pdf
 	find . -type f -name "*~" -delete
 	rm -rf graphicxpsd.tds.zip Work
 
