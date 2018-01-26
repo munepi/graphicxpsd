@@ -1,6 +1,8 @@
-% #!ptex2pdf -l -u -od '-v' test-gin-rule-psd
-%#!pdflatex test-gin-rule-psd
-\documentclass[pdftex]{article}%%set as a global option
+% #!rm -f tigerpsdfmt4* && ptex2pdf -l -u -ot '-shell-escape' -od '-v' test-gin-rule-psd
+% #!rm -f tigerpsdfmt4* && xelatex -shell-escape test-gin-rule-psd
+% #!rm -f tigerpsdfmt4* && pdflatex -shell-escape test-gin-rule-psd
+%#!rm -f tigerpsdfmt4* && lualatex -shell-escape test-gin-rule-psd
+\documentclass[luatex]{article}%%set as a global option
 \usepackage{graphicx}
 \usepackage{graphicxpsd}
 \listfiles
