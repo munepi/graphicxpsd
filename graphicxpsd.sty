@@ -1,5 +1,7 @@
-% #!ptex2pdf -l -u -od '-v' test-gin-rule-psd
-%#!pdflatex test-gin-rule-psd
+% #!rm -f tigerpsdfmt4* && ptex2pdf -l -u -ot '-shell-escape' -od '-v' test-gin-rule-psd
+% #!rm -f tigerpsdfmt4* && xelatex -shell-escape test-gin-rule-psd
+% #!rm -f tigerpsdfmt4* && pdflatex -shell-escape test-gin-rule-psd
+%#!rm -f tigerpsdfmt4* && lualatex -shell-escape test-gin-rule-psd
 \ProvidesPackage{graphicxpsd}
   [2017/10/16 v0.6  Supporting Adobe Photoshop format (PSD) for graphicx with sips (Darwin/macOS)/convert (ImageMagick) command]
 
@@ -9,7 +11,9 @@
 \def\gfxpsd@info{\PackageInfo{graphicxpsd}}
 
 \newif\if@gfxpsd@dvipdfmx \@gfxpsd@dvipdfmxfalse
-\newif\if@gfxpsd@pdftex \@gfxpsd@pdftextrue
+\newif\if@gfxpsd@pdftex \@gfxpsd@pdftexfalse
+
+% \DeclareOption{sips}{}
 
 %% support dviware drivers
 \DeclareOption{dvipdfmx}{\@gfxpsd@dvipdfmxtrue\@gfxpsd@pdftexfalse}
@@ -34,16 +38,22 @@
 %% then, include .psd file as converted PDF
 \let\Ginclude@psdtopdf\Ginclude@pdf
 
-%% compatibility for TL2016 or lower version
+%% compatibility for TL16 or lower version
 \@ifundefined{GPT@space}{%
   \def\GPT@space{ }%
 }{}
+
+%% check shell escape trigger
+\IfFileExists{shellesc.sty}{%%is bundled in TL15 or higher release version
+\RequirePackage{shellesc}}{%%otherwise, such TL has no luatex.
+  \protected\def\ShellEscape{\immediate\write18 }%%compatibility for TL14 or lower version
+}
 
 %% read .psd file
 \let\clone@Gread@pdf\Gread@pdf
 \def\Gread@psdtopdf#1{%
   \typeout{converting: \Gin@base\Gin@ext\GPT@space -> \Gin@base4gfxpsd.pdf}%
-  \immediate\write18{sips -s format pdf \Gin@base\Gin@ext\GPT@space --out \Gin@base4gfxpsd.pdf}%
+  \ShellEscape{sips -s format pdf \Gin@base\Gin@ext\GPT@space --out \Gin@base4gfxpsd.pdf}%
   %% renamed inside: foo.psd -> foo4gfxpsd.pdf
   \let\clone@Gin@base\Gin@base
   \def\Gin@base{\clone@Gin@base4gfxpsd}%
