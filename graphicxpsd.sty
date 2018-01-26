@@ -5,23 +5,25 @@
 %%
 %% This is file 'graphicxpsd.sty'.
 %%
-%% This package is licensed under the terms of the MIT License.
-%% 
 %% Copyright (c) 2017, 2018 Munehiro Yamamoto
 %% 
 %%   * e-mail:   munepixyz@gmail.com, munepi@greencherry.jp
 %%   * GitHub:   https://github.com/munepi
 %%   * Twitter:  @munepixyz
+%% 
+%% This package is licensed under the terms of the MIT License.
 %%
 \ProvidesPackage{graphicxpsd}
-  [2018/01/26 v0.8  Supporting Adobe Photoshop format (PSD) for graphicx with sips (Darwin/macOS)/convert (ImageMagick) command]
+  [2018/01/26 v1.0  Adobe Photoshop Data format (PSD) support for graphicx package
+                    with sips (Darwin/macOS)/convert (ImageMagick) command]
 
+%% declare package errors
 \def\gfxpsd@error{\PackageError{graphicxpsd}}
 \def\gfxpsd@warning{\PackageWarning{graphicxpsd}}
 \def\gfxpsd@warningnoline{\PackageWarningNoLine{graphicxpsd}}
 \def\gfxpsd@info{\PackageInfo{graphicxpsd}}
 
-%% support major dviware drivers
+%% support major graphicx drivers
 \newif\if@gfxpsd@dvipdfmx \@gfxpsd@dvipdfmxfalse
 \newif\if@gfxpsd@pdftex \@gfxpsd@pdftexfalse
 \DeclareOption{dvipdfmx}{\@gfxpsd@dvipdfmxtrue\@gfxpsd@pdftexfalse}
@@ -29,14 +31,14 @@
 \DeclareOption{luatex}{\@gfxpsd@dvipdfmxfalse\@gfxpsd@pdftextrue}
 \DeclareOption{pdftex}{\@gfxpsd@dvipdfmxfalse\@gfxpsd@pdftextrue}
 
-%% support some psd-to-pdf command
+%% support two psd-to-pdf command: sips (Darwin/macOS), convert (ImageMagick)
 \def\@gfxpsd@psdtopdf{sips}%% as default
 \DeclareOption{imagemagick}{\gdef\@gfxpsd@psdtopdf{convert}}
 \DeclareOption{sips}{\gdef\@gfxpsd@psdtopdf{sips}}
 
 \ProcessOptions\relax
 
-%% support the extension .psd
+%% support the extension .psd (psdtopdf)
 \if@gfxpsd@dvipdfmx
   \@namedef{Gin@rule@.PSD}#1{{psdtopdf}{.xbb}{#1}}
   \@namedef{Gin@rule@.psd}#1{{psdtopdf}{.xbb}{#1}}
@@ -81,3 +83,5 @@
   \clone@Gread@pdf{#1}}
 
 \endinput
+%%
+%% End of file `graphicxpsd.sty'.
