@@ -42,14 +42,14 @@
 %% read .psd file
 \let\clone@Gread@pdf\Gread@pdf
 \def\Gread@psdtopdf#1{%
-  \typeout{converting: \Gin@base\Gin@ext\GPT@space -> \Gin@base4dpx.pdf}%
-  \immediate\write18{sips -s format pdf \Gin@base\Gin@ext\GPT@space --out \Gin@base4dpx.pdf}%
-  %% renamed inside: foo.psd -> foo4dpx.pdf
+  \typeout{converting: \Gin@base\Gin@ext\GPT@space -> \Gin@base4gfxpsd.pdf}%
+  \immediate\write18{sips -s format pdf \Gin@base\Gin@ext\GPT@space --out \Gin@base4gfxpsd.pdf}%
+  %% renamed inside: foo.psd -> foo4gfxpsd.pdf
   \let\clone@Gin@base\Gin@base
-  \def\Gin@base{\clone@Gin@base4dpx}%
+  \def\Gin@base{\clone@Gin@base4gfxpsd}%
   \def\Gin@ext{.pdf}%
-% \typeout{!!! #1}%%=> tigerpsdfmt4dpx.xbb
-% \typeout{!!! \Gin@base\Gin@ext}%%=> tigerpsdfmt4dpx.pdf
+% \typeout{!!! #1}%%=> tigerpsdfmt4gfxpsd.xbb
+% \typeout{!!! \Gin@base\Gin@ext}%%=> tigerpsdfmt4gfxpsd.pdf
   \clone@Gread@pdf{#1}}
 
 \endinput
