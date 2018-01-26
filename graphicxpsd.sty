@@ -21,16 +21,19 @@
 \def\gfxpsd@warningnoline{\PackageWarningNoLine{graphicxpsd}}
 \def\gfxpsd@info{\PackageInfo{graphicxpsd}}
 
+%% support major dviware drivers
 \newif\if@gfxpsd@dvipdfmx \@gfxpsd@dvipdfmxfalse
 \newif\if@gfxpsd@pdftex \@gfxpsd@pdftexfalse
-
-% \DeclareOption{sips}{}
-
-%% support dviware drivers
 \DeclareOption{dvipdfmx}{\@gfxpsd@dvipdfmxtrue\@gfxpsd@pdftexfalse}
 \DeclareOption{xetex}{\@gfxpsd@dvipdfmxtrue\@gfxpsd@pdftexfalse}
 \DeclareOption{luatex}{\@gfxpsd@dvipdfmxfalse\@gfxpsd@pdftextrue}
 \DeclareOption{pdftex}{\@gfxpsd@dvipdfmxfalse\@gfxpsd@pdftextrue}
+
+%% support some psd-to-pdf command
+\def\@gfxpsd@psdtopdf{sips}%% as default
+\DeclareOption{imagemagick}{\gdef\@gfxpsd@psdtopdf{convert}}
+\DeclareOption{sips}{\gdef\@gfxpsd@psdtopdf{sips}}
+
 \ProcessOptions\relax
 
 %% support the extension .psd
@@ -64,7 +67,11 @@
 \let\clone@Gread@pdf\Gread@pdf
 \def\Gread@psdtopdf#1{%
   \typeout{converting: \Gin@base\Gin@ext\GPT@space -> \Gin@base4gfxpsd.pdf}%
-  \ShellEscape{sips -s format pdf \Gin@base\Gin@ext\GPT@space --out \Gin@base4gfxpsd.pdf}%
+  \def\gfxpsd@tmp{sips}\ifx\@gfxpsd@psdtopdf\gfxpsd@tmp
+    \ShellEscape{sips -s format pdf \Gin@base\Gin@ext\GPT@space --out \Gin@base4gfxpsd.pdf}%
+  \else\def\gfxpsd@tmp{convert}\ifx\@gfxpsd@psdtopdf\gfxpsd@tmp
+    \ShellEscape{convert \Gin@base\Gin@ext\GPT@space\Gin@base4gfxpsd.pdf}%
+  \fi\fi
   %% renamed inside: foo.psd -> foo4gfxpsd.pdf
   \let\clone@Gin@base\Gin@base
   \def\Gin@base{\clone@Gin@base4gfxpsd}%
