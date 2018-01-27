@@ -1,13 +1,13 @@
 
 
-graphicxpsd.tar.xz: clean
+graphicxpsd.zip: clean
 	git archive --format=tar --prefix=graphicxpsd/ HEAD | gtar -x
 
 	## remove unpacked files
 	rm -f graphicxpsd/.gitignore graphicxpsd/Makefile
 
 	## then, now just make archive
-	gtar --owner 0 --group 0 -cf - graphicxpsd | pixz -9 -p 2 >graphicxpsd.tar.xz
+	zip -9 -r graphicxpsd.zip graphicxpsd/*
 
 	rm -rf graphicxpsd
 	@echo finished
