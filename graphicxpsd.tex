@@ -1,6 +1,7 @@
 %#!rm -f tigerpsdfmt4* && lualatex -shell-escape graphicxpsd
 \documentclass[luatex]{article}
 \usepackage{shortvrb}\MakeShortVerb{\|}
+\usepackage{hyperref}
 \usepackage{graphicx}
 \usepackage{graphicxpsd}
 \title{\textsf{graphicxpsd} Package}
@@ -11,7 +12,7 @@
 \begin{abstract}
 This package provides Adobe Photoshop Data format (PSD) support 
 for \textsf{graphicx} package
-with \texttt{sips} (Darwin/macOS)/\texttt{convert} (ImageMagick) command.
+with \texttt{sips} (Darwin/macOS)/\texttt{magick} (ImageMagick) command.
 \end{abstract}
 
 \section{Motivation}
@@ -25,10 +26,13 @@ However, it currently does not support Adobe Photoshop Data format (PSD).
 
 Against that, we developed the \textsf{graphicxpsd} package 
 to support PSD format via PSD-to-PDF conversion 
-with the following image converters.
+with two image converters.
 \begin{itemize}
-\item \texttt{sips}: pre-installed command in Darwin/macOS
-\item \texttt{convert}: bundled command in ImageMagick
+\item \texttt{sips}: 
+pre-installed command in Darwin/macOS
+
+\item \texttt{magick}, \texttt{convert}: 
+bundled commands in \href{https://www.imagemagick.org/}{ImageMagick}
 \end{itemize}
 
 \section{Loading \textsf{graphicxpsd} Package}
@@ -44,10 +48,22 @@ Load \textsf{graphicxpsd} package after loading \textsf{graphicx} package.
 
 The list of available options is the following.
 \begin{itemize}
-\item |dvipdfmx|, |xetex|, |pdftex|, |luatex|: supported driver options; 
+\item |dvipdfmx|, |xetex|, |pdftex|, |luatex|: 
+supported driver options; 
 You can also give specific driver option from global option.
 
-\item |sips| (default), |imagemagick|: supported image converters
+\item |sips| (default), |magick| (same as |imagemagick|), |convert|: 
+supported image converters; 
+If you can use ImageMagick~7 or higer version, you may choose |magick|. 
+
+When ImageMagick project had released ImageMagick~7, 
+they changed \texttt{convert} to \texttt{magick} 
+because that might be the usual problem with the conflict of names 
+ between ImageMagick's \texttt{convert.exe} and 
+the Windows ``\texttt{convert.exe}'' program, 
+which complains about invalid parameters, and 
+changing the Imagemagick program's name to imconvert and 
+using that instead avoided the conflict.
 \end{itemize}
 
 \section{Example}

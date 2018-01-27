@@ -5,10 +5,15 @@
 \documentclass[luatex]{article}%%set as a global option
 \usepackage{graphicx}
 \usepackage[%
-  imagemagick,%default: sips
+  magick,%imagemagick,%%same as the one; %%default: sips
+  % convert,%% old ImageMagick
 ]{graphicxpsd}
 \listfiles
 \begin{document}
+\makeatletter
+PSD-to-PDF: \@gfxpsd@psdtopdf
+\makeatother
+
 %% $ file tigerpsdfmt.psd
 %% tigerpsdfmt.psd: Adobe Photoshop Image, 550 x 568, RGBA, 4x 8-bit channels
 \includegraphics{tigerpsdfmt.psd}
