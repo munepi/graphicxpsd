@@ -1,20 +1,20 @@
 
-graphicxpsd.tds.zip: clean
-	mkdir -p Work/tex/latex/graphicxpsd
-	mkdir -p Work/doc/latex/graphicxpsd
-	cp -a graphicxpsd.sty Work/tex/latex/graphicxpsd/
-	cp -a README.md LICENSE Work/doc/latex/graphicxpsd/
-	cp -a tigerpsdfmt.psd test-gin-rule-psd.tex Work/doc/latex/graphicxpsd/
-	cp -a graphicxpsd.tex graphicxpsd.pdf Work/doc/latex/graphicxpsd/
-	cd Work/ && zip -9 ../graphicxpsd.tds.zip {doc,tex}/latex/graphicxpsd/*
 
-	rm -rf Work
+graphicxpsd.tar.xz: clean
+	git archive --format=tar --prefix=graphicxpsd/ HEAD | gtar -x
+
+	## remove unpacked files
+	rm -f graphicxpsd/.gitignore graphicxpsd/Makefile
+
+	## then, now just make archive
+	gtar --owner 0 --group 0 -cf - graphicxpsd | pixz -9 -p 2 >graphicxpsd.tar.xz
+
+	rm -rf graphicxpsd
 	@echo finished
 
 clean:
-	rm -f *.aux *.log *4gfxpsd.pdf
+	rm -rf graphicxpsd.tar.xz graphicxpsd
+	rm -f *.aux *.log *4gfxpsd.*
 	find . -type f -name "*~" -delete
-	rm -rf graphicxpsd.tds.zip Work
 
-.PHONY: graphicxpsd.tds.zip
-
+.PHONY: graphicxpsd.tar.xz
