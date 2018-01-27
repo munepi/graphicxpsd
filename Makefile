@@ -13,8 +13,8 @@ graphicxpsd.zip: clean
 	@echo finished
 
 clean:
-	rm -rf graphicxpsd.tar.xz graphicxpsd
+	rm -rf graphicxpsd.zip graphicxpsd
 	rm -f *.aux *.log *4gfxpsd.*
 	find . -type f -name "*~" -delete
 
-.PHONY: graphicxpsd.tar.xz
+.PHONY: graphicxpsd.zip
