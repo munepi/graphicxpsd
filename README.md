@@ -1,6 +1,6 @@
 # `graphicxpsd` Package
 
-Adobe Photoshop Data format (PSD) support for graphicx package
+Adobe Photoshop Data format (PSD) support for graphicx package via PSD-to-PDF conversion
 
 This package provides Adobe Photoshop Data format (PSD) support for graphicx package
 with sips (Darwin/macOS)/convert (ImageMagick) command. 
