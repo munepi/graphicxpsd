@@ -1,4 +1,5 @@
-
+graphicxpsd.pdf: graphicxpsd.tex
+	lualatex -shell-escape graphicxpsd
 
 graphicxpsd.zip: clean
 	git archive --format=tar --prefix=graphicxpsd/ HEAD | gtar -x
