@@ -32,7 +32,7 @@ with two image converters.
 pre-installed command in Darwin/macOS
 
 \item \texttt{magick}: 
-bundled commands in \href{https://www.imagemagick.org/}{ImageMagick}
+bundled command in \href{https://www.imagemagick.org/}{ImageMagick}
 \end{itemize}
 
 \section{Loading \textsf{graphicxpsd} Package}
@@ -54,7 +54,15 @@ You can also give specific driver option from global option.
 
 \item |sips| (default), |magick| (same as |imagemagick|), |convert|\footnotemark: 
 supported image converters; 
-If you can use ImageMagick~7 or higer version, you may choose |magick|. 
+\begin{itemize}
+\item 
+Darwin/macOS users do not have to do anything 
+unless you choose ImageMagick as PSD-to-PDF converter. 
+\item 
+If you use ImageMagick~7, you may choose |magick|. 
+\item 
+If you should use ImageMagick~6 or lower version, you just choose |convert|.
+\end{itemize}
 \end{itemize}
 \footnotetext{When ImageMagick project had released ImageMagick~7, 
 they changed \texttt{convert} to \texttt{magick} 
