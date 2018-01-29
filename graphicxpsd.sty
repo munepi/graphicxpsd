@@ -61,6 +61,8 @@
 \fi\fi
 
 %% then, include .psd file as converted PDF
+\@ifundefined{Ginclude@pdf}{\gfxpsd@error{%
+  Please load 'graphicxpsd' package after loading 'graphicx' package.}}\relax
 \let\Ginclude@psdtopdf\Ginclude@pdf
 
 %% compatibility for TL16 or lower version
