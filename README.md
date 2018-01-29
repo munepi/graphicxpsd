@@ -1,9 +1,9 @@
-# `graphicxpsd` Package
+# graphicxpsd Package
 
-Adobe Photoshop Data format (PSD) support for graphicx package via PSD-to-PDF conversion
+LaTeX: Adobe Photoshop Data format (PSD) support for graphicx package via PSD-to-PDF conversion
 
 This package provides Adobe Photoshop Data format (PSD) support for graphicx package
-with sips (Darwin/macOS)/convert (ImageMagick) command. 
+with `sips` (Darwin/macOS)/`magick` (ImageMagick) command.
 
  * Major drivers support: `dvipdfmx`, `xetex`, `pdftex`, `luatex`
 

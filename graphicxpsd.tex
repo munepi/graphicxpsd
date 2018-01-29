@@ -31,7 +31,7 @@ with two image converters.
 \item \texttt{sips}: 
 pre-installed command in Darwin/macOS
 
-\item \texttt{magick}, \texttt{convert}: 
+\item \texttt{magick}: 
 bundled commands in \href{https://www.imagemagick.org/}{ImageMagick}
 \end{itemize}
 
@@ -52,25 +52,25 @@ The list of available options is the following.
 supported driver options; 
 You can also give specific driver option from global option.
 
-\item |sips| (default), |magick| (same as |imagemagick|), |convert|: 
+\item |sips| (default), |magick| (same as |imagemagick|), |convert|\footnotemark: 
 supported image converters; 
 If you can use ImageMagick~7 or higer version, you may choose |magick|. 
-
-When ImageMagick project had released ImageMagick~7, 
+\end{itemize}
+\footnotetext{When ImageMagick project had released ImageMagick~7, 
 they changed \texttt{convert} to \texttt{magick} 
 because that might be the usual problem with the conflict of names 
- between ImageMagick's \texttt{convert.exe} and 
+between the ImageMagick's \texttt{convert.exe} and 
 the Windows ``\texttt{convert.exe}'' program, 
 which complains about invalid parameters, and 
 changing the Imagemagick program's name to imconvert and 
-using that instead avoided the conflict.
-\end{itemize}
+using that instead avoided the conflict.}
 
 \section{Example}
 
-Typeset the following {\LaTeX} document with LuaTeX.
-
+Typeset the following {\LaTeX} document with Lua{\TeX} enabling the shell escape, 
+that is, run |lualatex -shell-escape|.
 \begin{quote}
+\small
 \begin{verbatim}
 %#!lualatex -shell-escape
 \documentclass[luatex]{article}%%set luatex driver as global option
@@ -81,9 +81,19 @@ Typeset the following {\LaTeX} document with LuaTeX.
 \end{document}
 \end{verbatim}
 \end{quote}
-
 Then, the result is as below.
-
+\begin{center}
 \includegraphics{tigerpsdfmt.psd}
+\end{center}
+Incidentally, the above \texttt{tigerpsdfmt.psd} file is converted from 
+the \texttt{tiger.eps} file (a.k.a.~``cubic spline tiger''), 
+which comes with Ghostscript.
+\begin{quote}
+\small
+\begin{verbatim}
+$ file tigerpsdfmt.psd 
+tigerpsdfmt.psd: Adobe Photoshop Image, 550 x 568, RGBA, 4x 8-bit channels
+\end{verbatim}
+\end{quote}
 
 \end{document}
