@@ -10,28 +10,28 @@
 \begin{document}
 \maketitle
 \begin{abstract}
-This package provides Adobe Photoshop Data format (PSD) support 
+This package provides Adobe Photoshop Data format (PSD) support
 for \textsf{graphicx} package
 with \texttt{sips} (Darwin/macOS)/\texttt{magick} (ImageMagick) command.
 \end{abstract}
 
 \section{Motivation}
-\textsf{graphicx} package supports already many graphics image formats as bellow. 
+\textsf{graphicx} package supports already many graphics image formats as bellow.
 \begin{itemize}
 \item non-vector formats: jpg, png, bmp, and so on
 \item PostScript-style formats: eps, ps
 \item PDF-style formats: pdf, ai
 \end{itemize}
-However, it currently does not support Adobe Photoshop Data format (PSD). 
+However, it currently does not support Adobe Photoshop Data format (PSD).
 
-Against that, we developed the \textsf{graphicxpsd} package 
-to support PSD format via PSD-to-PDF conversion 
+Against that, we developed the \textsf{graphicxpsd} package
+to support PSD format via PSD-to-PDF conversion
 with two image converters.
 \begin{itemize}
-\item \texttt{sips}: 
+\item \texttt{sips}:
 pre-installed command in Darwin/macOS
 
-\item \texttt{magick}: 
+\item \texttt{magick}:
 bundled command in \href{https://www.imagemagick.org/}{ImageMagick}
 \end{itemize}
 
@@ -48,38 +48,42 @@ Load \textsf{graphicxpsd} package after loading \textsf{graphicx} package.
 
 The list of available options is the following.
 \begin{itemize}
-\item |dvipdfmx|, |xetex|, |pdftex|, |luatex|: 
-supported driver options; 
+\item |dvipdfmx|, |xetex|, |pdftex|, |luatex|:
+supported driver options;
 You can also give specific driver option from global option.
 
-\item |sips| (default), 
-|magick| (same as |imagemagick|), |convert|\footnotemark: % , 
-% |graphicsmagick|: 
-supported image converters; 
+\item |sips| (default),
+|magick| (same as |imagemagick|), |convert|\footnotemark: % ,
+% |graphicsmagick|:
+supported image converters;
 \begin{itemize}
-\item 
-Darwin/macOS users do not have to do anything 
-unless you choose ImageMagick as PSD-to-PDF converter. 
-\item 
-If you use ImageMagick~7, you may choose |magick|. 
-\item 
+\item
+Darwin/macOS users do not have to do anything
+unless you choose ImageMagick as PSD-to-PDF converter.
+\item
+If you use ImageMagick~7, you may choose |magick|.
+\item
 If you should use ImageMagick~6 or lower version, you just choose |convert|.
-% \item 
-% If you use GraphicsMagick, you may choose |graphicsmagick|. 
+% \item
+% If you use GraphicsMagick, you may choose |graphicsmagick|.
 \end{itemize}
+
+\item |cache=true|: supports to include cached images for all PSD files.
+If there does not exist the cached image for a PSD file,
+\textsf{graphicxpsd} attempts PSD-to-PDF conversion of the PSD file.
 \end{itemize}
-\footnotetext{When ImageMagick project had released ImageMagick~7, 
-they changed \texttt{convert} to \texttt{magick} 
-because that might be the usual problem with the conflict of names 
-between the ImageMagick's \texttt{convert.exe} and 
-the Windows ``\texttt{convert.exe}'' program, 
-which complains about invalid parameters, and 
-changing the Imagemagick program's name to imconvert and 
+\footnotetext{When ImageMagick project had released ImageMagick~7,
+they changed \texttt{convert} to \texttt{magick}
+because that might be the usual problem with the conflict of names
+between the ImageMagick's \texttt{convert.exe} and
+the Windows ``\texttt{convert.exe}'' program,
+which complains about invalid parameters, and
+changing the Imagemagick program's name to imconvert and
 using that instead avoided the conflict.}
 
 \section{Example}
 
-Typeset the following {\LaTeX} document with Lua{\TeX} enabling the shell escape, 
+Typeset the following {\LaTeX} document with Lua{\TeX} enabling the shell escape,
 that is, run |lualatex -shell-escape|.
 \begin{quote}
 \small
@@ -97,13 +101,13 @@ Then, the result is as below.
 \begin{center}
 \includegraphics{tigerpsdfmt.psd}
 \end{center}
-Incidentally, the above \texttt{tigerpsdfmt.psd} file is converted from 
-the \texttt{tiger.eps} file (a.k.a.~``cubic spline tiger''), 
+Incidentally, the above \texttt{tigerpsdfmt.psd} file is converted from
+the \texttt{tiger.eps} file (a.k.a.~``cubic spline tiger''),
 which comes with Ghostscript.
 \begin{quote}
 \small
 \begin{verbatim}
-$ file tigerpsdfmt.psd 
+$ file tigerpsdfmt.psd
 tigerpsdfmt.psd: Adobe Photoshop Image, 550 x 568, RGBA, 4x 8-bit channels
 \end{verbatim}
 \end{quote}

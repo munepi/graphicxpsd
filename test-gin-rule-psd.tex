@@ -7,19 +7,24 @@
 \usepackage[%
   magick,%imagemagick,graphicsmagick,%%same as the one; %%default: sips
   % convert,%% old ImageMagick
+  cache=true,%%default: false
 ]{graphicxpsd}
 \listfiles
 \begin{document}
+\begin{itemize}
 \makeatletter
-PSD-to-PDF: \@gfxpsd@psdtopdf
+\item PSD-to-PDF: \@gfxpsd@psdtopdf
+
+\item image cache: \if@gfxpsd@imagecache true\else false\fi
 \makeatother
+\end{itemize}
 
 %% $ file tigerpsdfmt.psd
 %% tigerpsdfmt.psd: Adobe Photoshop Image, 550 x 568, RGBA, 4x 8-bit channels
 \includegraphics{tigerpsdfmt.psd}
 \end{document}
 
-$ pdfinfo tigerpsdfmt4gfxpsd.pdf 
+$ pdfinfo tigerpsdfmt4gfxpsd.pdf
 Title:          tigerpsdfmt4gfxpsd
 Producer:       /opt/homebrew/Cellar/imagemagick/7.0.7-15/share/doc/ImageMagick-7//index.html
 CreationDate:   Sat Jan 27 00:10:51 2018 JST
@@ -37,7 +42,7 @@ File size:      1052740 bytes
 Optimized:      no
 PDF version:    1.4
 
-$ pdfinfo tigerpsdfmt4gfxpsd.pdf 
+$ pdfinfo tigerpsdfmt4gfxpsd.pdf
 Producer:       Mac OS X 10.13.4 Quartz PDFContext
 CreationDate:   Fri Jan 26 15:12:13 2018 JST
 ModDate:        Fri Jan 26 15:12:13 2018 JST
