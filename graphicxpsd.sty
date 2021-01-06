@@ -2,15 +2,16 @@
 % #!rm -f tigerpsdfmt4* && xelatex -shell-escape test-gin-rule-psd
 % #!rm -f tigerpsdfmt4* && pdflatex -shell-escape test-gin-rule-psd
 %#!rm -f tigerpsdfmt4* && lualatex -shell-escape test-gin-rule-psd
+% #!lualatex -shell-escape test-gin-rule-psd
 %%
 %% This is file 'graphicxpsd.sty'.
 %%
-%% Copyright (c) 2017, 2018 Munehiro Yamamoto
-%% 
+%% Copyright (c) 2017-2021 Munehiro Yamamoto
+%%
 %%   * e-mail:   munepixyz@gmail.com, munepi@greencherry.jp
 %%   * GitHub:   https://github.com/munepi
 %%   * Twitter:  @munepixyz
-%% 
+%%
 %% This package is licensed under the terms of the MIT License.
 %%
 \NeedsTeXFormat{LaTeX2e}
@@ -32,8 +33,8 @@
 \DeclareOption{luatex}{\@gfxpsd@dvipdfmxfalse\@gfxpsd@pdftextrue}
 \DeclareOption{pdftex}{\@gfxpsd@dvipdfmxfalse\@gfxpsd@pdftextrue}
 
-%% support two psd-to-pdf commands: 
-%% sips (Darwin/macOS), magick/convert (ImageMagick), 
+%% support two psd-to-pdf commands:
+%% sips (Darwin/macOS), magick/convert (ImageMagick),
 %% graphicsmagick (GraphicsMagick)
 \newif\if@gfxpsd@imagemagick \@gfxpsd@imagemagickfalse
 \def\@gfxpsd@psdtopdf{sips}%% as default
@@ -47,6 +48,13 @@
   \@gfxpsd@imagemagicktrue\gdef\@gfxpsd@psdtopdf{convert}}
 \DeclareOption{graphicsmagick}{%
   \@gfxpsd@imagemagicktrue\gdef\@gfxpsd@psdtopdf{gm\GPT@space convert}}
+
+%% image cache flag
+\newif\if@gfxpsd@imagecache \@gfxpsd@imagecachefalse
+\DeclareOption{cache=true}{\@gfxpsd@imagecachetrue}
+\DeclareOption{cache=True}{\@gfxpsd@imagecachetrue}
+\DeclareOption{cache=false}{\@gfxpsd@imagecachefalse}
+\DeclareOption{cache=False}{\@gfxpsd@imagecachefalse}
 
 \ProcessOptions\relax
 
@@ -82,11 +90,13 @@
 %% read .psd file
 \let\clone@Gread@pdf\Gread@pdf
 \def\Gread@psdtopdf#1{%
-  \typeout{converting: \Gin@base\Gin@ext\GPT@space -> \Gin@base4gfxpsd.pdf}%
-  \if@gfxpsd@imagemagick
-    \ShellEscape{\@gfxpsd@psdtopdf\GPT@space\Gin@base\Gin@ext\GPT@space\Gin@base4gfxpsd.pdf}%
+  \if@gfxpsd@imagecache
+    \IfFileExists{\Gin@base4gfxpsd.pdf}{%
+      \typeout{including cached image: \Gin@base4gfxpsd.pdf}%
+    }{\typeout{not found: \Gin@base4gfxpsd.pdf}%
+      \@gfxpsd@convert@psd@to@pdf}%
   \else
-    \ShellEscape{sips -s format pdf \Gin@base\Gin@ext\GPT@space --out \Gin@base4gfxpsd.pdf}%
+    \@gfxpsd@convert@psd@to@pdf
   \fi
   %% renamed inside: foo.psd -> foo4gfxpsd.pdf
   \let\clone@Gin@base\Gin@base
@@ -95,6 +105,15 @@
 % \typeout{!!! #1}%%=> tigerpsdfmt4gfxpsd.xbb
 % \typeout{!!! \Gin@base\Gin@ext}%%=> tigerpsdfmt4gfxpsd.pdf
   \clone@Gread@pdf{#1}}
+
+\def\@gfxpsd@convert@psd@to@pdf{%
+  \typeout{converting: \Gin@base\Gin@ext\GPT@space -> \Gin@base4gfxpsd.pdf}%
+  \if@gfxpsd@imagemagick
+    \ShellEscape{\@gfxpsd@psdtopdf\GPT@space\Gin@base\Gin@ext\GPT@space\Gin@base4gfxpsd.pdf}%
+  \else
+    \ShellEscape{sips -s format pdf \Gin@base\Gin@ext\GPT@space --out \Gin@base4gfxpsd.pdf}%
+  \fi
+}
 
 \endinput
 %%
