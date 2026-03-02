@@ -10,13 +10,18 @@
   cache=true,%%default: false
 ]{graphicxpsd}
 \listfiles
+
+%% expl3の内部変数へアクセスし、テスト出力するためのヘルパーコマンド
+\ExplSyntaxOn
+\newcommand*{\ShowPsdCommand}{\tl_use:N \l__gfxpsd_psdtopdf_tl}
+\newcommand*{\ShowCacheStatus}{\bool_if:NTF \l__gfxpsd_cache_bool { true } { false }}
+\ExplSyntaxOff
+
 \begin{document}
 \begin{itemize}
-\makeatletter
-\item PSD-to-PDF: \@gfxpsd@psdtopdf
+\item PSD-to-PDF: \ShowPsdCommand
 
-\item image cache: \if@gfxpsd@imagecache true\else false\fi
-\makeatother
+\item image cache: \ShowCacheStatus
 \end{itemize}
 
 %% $ file tigerpsdfmt.psd
