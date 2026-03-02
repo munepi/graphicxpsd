@@ -1,6 +1,8 @@
 graphicxpsd.pdf: graphicxpsd.tex
 	lualatex -shell-escape graphicxpsd
 
+.PHONY: ctanzip
+ctanzip: graphicxpsd.zip ## Archive for CTAN upload
 graphicxpsd.zip: clean
 	git archive --format=tar --prefix=graphicxpsd/ HEAD | gtar -x
 
@@ -13,9 +15,8 @@ graphicxpsd.zip: clean
 	rm -rf graphicxpsd
 	@echo finished
 
-clean:
+.PHONY: clean
+clean: ## Clean this repository
 	rm -rf graphicxpsd.zip graphicxpsd
 	rm -f *.aux *.log *4gfxpsd.*
 	find . -type f -name "*~" -delete
-
-.PHONY: graphicxpsd.zip
